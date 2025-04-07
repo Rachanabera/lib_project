@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to CSS file -->
+    <script>
+        function validatePassword() {
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirm_password").value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Left Section with an Image -->
+        <div class="left-section">
+            <img src="image.png" alt="Signup Image">
+        </div>
+
+        <!-- Right Section with Signup Form -->
+        <div class="right-section">
+            <div class="form-box">
+                <h2>Sign Up</h2>
+                <form id="signupForm" action="signup.php" method="POST" onsubmit="return validatePassword()">
+                    <input type="text" name="name" placeholder="Enter Full Name" required>
+                    <input type="text" name="roll_number" placeholder="Enter Roll Number" required>
+                    <input type="text" name="year" placeholder="Enter FE/SE/TE/BE" required>
+                    <input type="text" name="division" placeholder="Enter Division" required>
+                    <input type="text" name="branch" placeholder="Enter Branch" required>
+                    <input type="text" name="phone_number" placeholder="Enter Phone Number" required>
+                    
+                    <!-- Password Fields -->
+                    <input type="password" id="password" name="password" placeholder="Enter Password" required>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+
+                    <button type="submit">Signup</button>
+                </form>
+                <p>Already have an account? <a href="login.html">Login here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Redirect to Login Page After Signup -->
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+            let form = this;
+
+            fetch(form.action, {
+                method: "POST",
+                body: new FormData(form)
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert("Signup successful! Redirecting to login...");
+                window.location.href = "login.html"; // Redirect to login page
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+
+</body>
+</html>

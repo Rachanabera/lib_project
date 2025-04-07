@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- For Graphs -->
+</head>
+
+
+<body>
+<div class="dashboard">
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Library Logo">
+        </div>
+        <h1>Admin Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Manage Books</a></li>
+                <li><a href="#">Search Books</a></li>
+                <li><a href="#">Issued Books</a></li>
+                <li><a href="#">Defaulter List</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="sections-container">
+            <!-- Record Library Activities -->
+            <section class="library-activities">
+                <h3>Library Activities</h3>
+                <div class="activity-info">
+                    <p>Total Books Issued: <strong>50</strong></p>
+                    <p>Books Returned Today: <strong>5</strong></p>
+                    <button>View Activities</button>
+                </div>
+            </section>
+
+            <!-- Manage Books Section -->
+            <section class="manage-books">
+                <h3>Manage Books</h3>
+                <button>Add Book</button>
+                <button>Update Book</button>
+                <button>Remove Book</button>
+            </section>
+
+            <!-- Manage Students Section -->
+            <section class="manage-students">
+                <h3>Manage Students</h3>
+                <button>View Students</button>
+                <button>Track Activities</button>
+            </section>
+
+            <!-- View Issued Books Section -->
+            <section class="view-issued-books">
+                <h3>View Issued Books</h3>
+                <button>Show All Issued Books</button>
+            </section>
+
+            <!-- Defaulter List Section -->
+            <section class="defaulter-list">
+                <h3>Defaulter List</h3>
+                <ul>
+                    <li>Student 1: Book XYZ - Overdue by 2 days</li>
+                    <li>Student 2: Book ABC - Overdue by 5 days</li>
+                </ul>
+                <button>View More Defaulters</button>
+            </section>
+
+            <!-- Activity Overview Graph -->
+            <section class="activity-graph">
+                <h3>Activity Overview</h3>
+                <canvas id="activityChartAdmin"></canvas> <!-- Placeholder for Graph -->
+            </section>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 RAIT Library. All rights reserved.</p>
+    </footer>
+</div>
+
+<script>
+    // Chart.js example to generate activity graph for admin
+    var ctx = document.getElementById('activityChartAdmin').getContext('2d');
+    var activityChartAdmin = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Books Issued vs Returned',
+                data: [10, 15, 20, 25, 30, 40],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>

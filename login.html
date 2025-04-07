@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login - Library Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Style for role select box */
+        #role,
+        select[name="user_type"] {
+            width: 100%;
+            padding: 16px; /* Increased padding */
+            font-size: 20px; /* Larger font */
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        /* Style for dropdown options */
+        select[name="user_type"] option {
+            font-size: 18px;
+            padding: 12px;
+        }
+
+        /* Button styling */
+        button {
+            width: 100%;
+            padding: 14px;
+            font-size: 18px;
+            border-radius: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Section (Image) -->
+        <div class="left-section">
+            <img src="image.png" alt="Library Image">
+        </div>
+
+        <!-- Right Section (Login Form) -->
+        <div class="right-section">
+            <div class="form-box">
+                <h2>Student Login</h2>
+
+                <form id="loginForm" action="login.php" method="post">
+                    <input type="text" id="username" name="username" placeholder="Username" required>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+
+                    <!-- Larger role dropdown -->
+                    <select name="user_type" required>
+                        <option value="student">Student</option>
+                        <option value="admin">Admin</option>
+                    </select>
+
+                    <button type="submit">Login</button>
+                </form>
+                <p>Not registered? <a href="otp.html">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

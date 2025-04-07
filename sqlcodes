@@ -1,0 +1,20 @@
+CREATE DATABASE IF NOT EXISTS library;
+
+USE library;
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    roll_number VARCHAR(50) NOT NULL,
+    year VARCHAR(10) NOT NULL,
+    division VARCHAR(10) NOT NULL,
+    branch VARCHAR(100) NOT NULL,
+    phone_number VARCHAR(15) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+); 
+
+
+
+
+ALTER TABLE users ADD COLUMN user_type ENUM('student', 'admin') NOT NULL;

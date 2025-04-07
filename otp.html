@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification - Library Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="otp.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <img src="image.png" alt="Library Image">
+        </div>
+        <div class="right-section">
+            <div class="form-box">
+                <h2>Email Verification</h2>
+
+                <!-- User Role Selection -->
+                <label for="user-role">Signup Page for :</label>
+                <select id="user-role">
+                    <option value="student">Student</option>
+                    <option value="admin">Admin</option>
+                </select>
+
+                <form id="email-form">
+                    <input type="text" id="name" placeholder="Enter Full Name" required>
+                    <input type="email" id="email" placeholder="Enter College Email ID" required>
+                    <button type="button" id="send-otp">Send OTP</button>
+                </form>
+
+                <div id="otp-section">
+                    <br>
+                    <h4>Enter OTP</h4>
+                    <input type="text" id="otp" placeholder="Enter OTP" required>
+                    <button type="button" id="verify-otp">Verify OTP</button>
+                </div>
+
+                <button id="proceed-btn" style="display: none;">Proceed to Signup</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
