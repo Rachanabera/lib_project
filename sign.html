@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - Library Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .left-section {
+            flex: 1;
+            background-color: #f2f2f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .left-section img {
+            width: 80%;
+            max-width: 400px;
+        }
+        .right-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .form-box {
+            width: 80%;
+            max-width: 400px;
+        }
+        .form-box h2 {
+            text-align: center;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <img src="image.png" alt="Library Image">
+        </div>
+        <div class="right-section">
+            <div class="form-box">
+                <h2>Signup Form</h2>
+                <form id="signup-form">
+                    <input type="text" id="name" placeholder="Enter Full Name" required>
+                    <input type="text" id="roll-number" placeholder="Enter Roll Number" required>
+                    <input type="text" id="year" placeholder="Enter FE/SE/TE/BE" required>
+                    <input type="text" id="division" placeholder="Enter Division" required>
+                    <input type="text" id="branch" placeholder="Enter Branch" required>
+                    <input type="text" id="phone-number" placeholder="Enter Phone Number" required>
+                    <button type="submit" id="signup-btn">Signup</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("signup-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+            window.location.href = "login.html"; // Redirect to login page
+        });
+    </script>
+</body>
+</html>
