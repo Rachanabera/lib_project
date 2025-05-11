@@ -19,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['book_id'])) {
         die("❌ Connection failed: " . $conn->connect_error);
     }
 
-    // Check if book exists and has available copies
     $check = $conn->prepare("SELECT available_copies FROM books WHERE id = ?");
     $check->bind_param("i", $book_id);
     $check->execute();
@@ -33,32 +32,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['book_id'])) {
             $issue_date = date('Y-m-d');
             $due_date = date('Y-m-d', strtotime('+14 days'));
 
-            // Insert into issued_books
             $insert = $conn->prepare("INSERT INTO issued_books (student_id, book_id, issue_date, due_date) VALUES (?, ?, ?, ?)");
             $insert->bind_param("iiss", $student_id, $book_id, $issue_date, $due_date);
 
             if ($insert->execute()) {
-                // 🛠️ Correct column name here
                 $update = $conn->prepare("UPDATE books SET available_copies = available_copies - 1 WHERE id = ?");
                 $update->bind_param("i", $book_id);
+                $update->execute();
 
-                if ($update->execute()) {
-                    echo "✅ Book issued successfully and available copies updated.";
-                } else {
-                    echo "❌ Issued but failed to update available copies: " . $conn->error;
-                }
+                // Redirect to student page with success message
+                header("Location: student.php?msg=Book issued successfully");
+                exit();
             } else {
-                echo "❌ Failed to insert issued book: " . $conn->error;
+                header("Location: student.php?msg=Failed to issue book");
+                exit();
             }
         } else {
-            echo "⚠️ No available copies left.";
+            header("Location: student.php?msg=No available copies left");
+            exit();
         }
     } else {
-        echo "❌ Book not found.";
+        header("Location: student.php?msg=Book not found");
+        exit();
     }
 
     $conn->close();
 } else {
-    echo "❌ Invalid request.";
+    header("Location: student.php?msg=Invalid request");
+    exit();
 }
-?>

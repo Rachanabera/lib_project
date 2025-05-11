@@ -1,35 +1,36 @@
 <?php
 session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+if (!isset($_SESSION['student_id'])) {
+    header("Location: login.php");
+    exit();
+}
 
 $conn = new mysqli("localhost", "root", "", "library");
-if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['return_book_id'])) {
     $student_id = $_SESSION['student_id'];
     $book_id = $_POST['return_book_id'];
 
-    // Delete from issued_books
-    $delete = $conn->prepare("DELETE FROM issued_books WHERE student_id = ? AND book_id = ?");
-    $delete->bind_param("ii", $student_id, $book_id);
+    // Update the 'return_date' for the returned book
+    $stmt = $conn->prepare("UPDATE issued_books SET return_date = NOW() WHERE student_id = ? AND book_id = ? AND return_date IS NULL");
+    $stmt->bind_param("ii", $student_id, $book_id);
 
-    if ($delete->execute()) {
-        // Increment available_copies AND returned_copies
-        $update = $conn->prepare("UPDATE books SET available_copies = available_copies + 1, returned_copies = returned_copies + 1 WHERE id = ?");
-        $update->bind_param("i", $book_id);
-        if ($update->execute()) {
-            echo "Student ID: $student_id <br>";
-            echo "Book ID: $book_id <br>";
+    if ($stmt->execute()) {
+        // Optionally, you can also update the number of available copies in the 'books' table
+        $update_books_stmt = $conn->prepare("UPDATE books SET available_copies = available_copies + 1 WHERE id = ?");
+        $update_books_stmt->bind_param("i", $book_id);
+        $update_books_stmt->execute();
+        $update_books_stmt->close();
 
-            header("Location: student.php");
-            exit();
-        } else {
-            echo "❌ Failed to update book stats.";
-        }
+        header("Location: student_dashboard.php?return=success");
+        exit();
     } else {
-        echo "❌ Failed to remove issued book.";
+        echo "Error returning the book.";
     }
+
+    $stmt->close();
 }
-$conn->close();
 ?>

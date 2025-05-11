@@ -22,7 +22,7 @@ body {
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    background-image: url('background.jpg');
+    background-image: url('background.png');
     background-size: cover;
     background-position: center;
 }
@@ -148,6 +148,46 @@ footer {
 footer p {
     font-size: 14px;
 }
+
+.issued-book-records-container {
+    margin-top: 40px;
+    margin-bottom: 60px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .issued-book-records-container h3 {
+    margin-bottom: 15px;
+    font-size: 20px;
+  }
+  
+  .issued-book-table-wrapper {
+    overflow-x: auto;
+  }
+  
+  .issued-book-records-container table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+  }
+  
+  .issued-book-records-container table th,
+  .issued-book-records-container table td {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .issued-book-records-container table th {
+    background-color: #550000;
+    color: white;
+  }
+  
+  .issued-book-records-container table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
 
 /* Media Query for Smaller Devices */
 @media (max-width: 768px) {

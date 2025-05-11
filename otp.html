@@ -5,40 +5,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OTP Verification - Library Management</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="otp.js" defer></script>
 </head>
 <body>
-    <div class="container">
-        <div class="left-section">
-            <img src="image.png" alt="Library Image">
-        </div>
-        <div class="right-section">
-            <div class="form-box">
-                <h2>Email Verification</h2>
 
-                <!-- User Role Selection -->
-                <label for="user-role">Signup Page for :</label>
-                <select id="user-role">
-                    <option value="student">Student</option>
-                    <option value="admin">Admin</option>
-                </select>
+<div class="container">
+    <div class="left-section">
+        <img src="image.png" alt="Library Image">
+    </div>
 
-                <form id="email-form">
-                    <input type="text" id="name" placeholder="Enter Full Name" required>
-                    <input type="email" id="email" placeholder="Enter College Email ID" required>
-                    <button type="button" id="send-otp">Send OTP</button>
-                </form>
+    <div class="right-section">
+        <div class="form-box">
+            <h2>Email Verification</h2>
 
-                <div id="otp-section">
-                    <br>
-                    <h4>Enter OTP</h4>
-                    <input type="text" id="otp" placeholder="Enter OTP" required>
-                    <button type="button" id="verify-otp">Verify OTP</button>
-                </div>
+            <label for="user-role">Signup Page for:</label>
+            <select id="user-role">
+                <option value="student">Student</option>
+                <option value="admin">Admin</option>
+            </select>
 
-                <button id="proceed-btn" style="display: none;">Proceed to Signup</button>
+            <form id="email-form">
+                <label for="name"></label>
+                <input type="text" name="name" id="name" placeholder="Enter Full Name" required>
+
+                <label for="email"></label>
+                <input type="email" name="email" id="email" placeholder="Enter College Email ID" required>
+
+                <button type="submit">Send OTP</button>
+            </form>
+
+            <div id="otp-section" style="display:none;">
+                <h4>Enter OTP</h4>
+                <input type="text" id="otp" placeholder="Enter OTP" required>
+                <button type="button" id="verify-otp-btn">Verify OTP</button>
             </div>
+
+            <button id="proceed-btn" style="display:none;">Proceed to Signup</button>
         </div>
     </div>
+</div>
+
+<script>
+    const emailForm = document.getElementById('email-form');
+    const otpSection = document.getElementById('otp-section');
+    const verifyOtpBtn = document.getElementById('verify-otp-btn');
+    const proceedBtn = document.getElementById('proceed-btn');
+    
+    // Function to check if email is from dypatil.edu
+    function isValidDypatilEmail(email) {
+        const domain = '@dypatil.edu';
+        return email.endsWith(domain);
+    }
+
+    emailForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const email = document.getElementById('email').value;
+
+        // Check if the email is from dypatil.edu
+        if (!isValidDypatilEmail(email)) {
+            alert('Please enter valid collge Email ID. ');
+            return; // Exit the function if email is invalid
+        }
+
+        const formData = new FormData(emailForm);
+
+        fetch('send_otp.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.text())
+        .then(data => {
+            if (data.trim() === "success") {
+                alert('OTP sent to your email!');
+                otpSection.style.display = 'block'; // Show OTP section
+            } else {
+                alert('Failed to send OTP. Please try again.');
+            }
+        });
+    });
+
+    verifyOtpBtn.addEventListener('click', function() {
+        const otp = document.getElementById('otp').value;
+
+        fetch('verify_otp.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'otp=' + encodeURIComponent(otp)
+        })
+        .then(res => res.text())
+        .then(data => {
+            if (data.trim() === "verified") {
+                alert('OTP Verified Successfully! ✅');
+                proceedBtn.style.display = 'block'; // Show Proceed button after OTP verification
+            } else {
+                alert('Invalid OTP ❌. Please try again.');
+            }
+        });
+    });
+
+    proceedBtn.addEventListener('click', function() {
+        const selectedRole = document.getElementById('user-role').value;
+        alert('Redirecting to Signup Page as ' + selectedRole + '...');
+        if (selectedRole === 'student') {
+            window.location.href = 'signup.html'; // change to actual student signup page
+        } else if (selectedRole === 'admin') {
+            window.location.href = 'signup1.html'; // change to actual admin signup page
+        }
+    });
+</script>
+
 </body>
 </html>
